@@ -13,3 +13,11 @@ the feature if changes need to be made later.  If you do have to make changes
 to a feature after it is merged, just checkout the feature branch, edit the
 files as you need, checkout master, then make another merge.  The warning
 above still applies.
+
+#Indentation
+I (Treyzania) use the 1TBS indentation style in Java, so please do the same in
+this project such that everything matches.  Same goes for the line skipping
+format.
+
+In addition, git can get upset if you don't end a file on a newline, so try to
+do that wherever possible.
