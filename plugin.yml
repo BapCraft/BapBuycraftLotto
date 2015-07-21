@@ -2,3 +2,6 @@ name: SpigotBlankPlugin
 main: com.meeku.tutorialplugin.SpigotBlankPlugin
 version: 1.0
 commands:
+    addbcticket:
+        description: Adds a ticket to the current pot.
+        usage: /addbcticket <uuid>
