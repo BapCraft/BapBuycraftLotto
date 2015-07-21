@@ -1,0 +1,4 @@
+name: SpigotBlankPlugin
+main: com.meeku.tutorialplugin.SpigotBlankPlugin
+version: 1.0
+commands:

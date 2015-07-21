@@ -1,5 +1,17 @@
 package com.bapcraft.bclotto;
 
-public class BCLotto {
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class BCLotto extends JavaPlugin {
+	
+	@Override
+	public void onEnable() {
+		
+	}
+	
+	@Override
+	public void onDisable() {
+		
+	}
 	
 }
