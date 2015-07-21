@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class Ticket {
 
-	protected static BigDecimal TICKET_PRICE = new BigDecimal(1); // USD.  Default.
+	protected static BigDecimal TICKET_PRICE = new BigDecimal(1); // USD.  Changed in config.
 	
 	public final UUID player;
 	
@@ -13,6 +13,10 @@ public class Ticket {
 		
 		this.player = player;
 		
+	}
+	
+	public static final BigDecimal getTicketPrice() {
+		return TICKET_PRICE;
 	}
 	
 }

@@ -7,6 +7,8 @@ import com.bapcraft.bclotto.prizes.Prize;
 
 public class Drawing { // Noun.
 
+	protected static int NEEDED_TICKETS = 10; // Changed in config. 
+	
 	public HashMap<Prize, Integer> prizes;
 	public ArrayList<Ticket> pot;
 	
@@ -28,6 +30,10 @@ public class Drawing { // Noun.
 	 */
 	public void putPrize(Prize p, int weight) {
 		prizes.put(p, weight);
+	}
+	
+	public static final int getTicketsNeeded() {
+		return NEEDED_TICKETS;
 	}
 	
 }

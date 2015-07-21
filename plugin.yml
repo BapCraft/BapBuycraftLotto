@@ -5,3 +5,6 @@ commands:
     addbcticket:
         description: Adds a ticket to the current pot.
         usage: /addbcticket <uuid>
+    buycraftlottocheck:
+        description: Checks the current statistics of the Buycraft lottery.
+        usage: /buycraftlottocheck
