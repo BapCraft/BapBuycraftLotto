@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class Ticket {
 
-	public static final BigDecimal TICKET_PRICE = new BigDecimal(1); // USD.
+	protected static BigDecimal TICKET_PRICE = new BigDecimal(1); // USD.  Default.
 	
 	public final UUID player;
 	
