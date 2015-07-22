@@ -1,4 +1,16 @@
-#Notice to Developers:
+#BapBuycraftLotto
+
+This is a plugin made for the Bapcraft Minecraft server to manage the sever-
+side implementation of their Buycraft lottery.
+
+To add a player to the lottery, use the command `addbcticket <uuid>`, where
+the UUID is the player's account ID in the format `XXXXXXXX-XXXX-XXXX-XXXX-
+XXXXXXXXXXXX`, in the console.
+
+For players to check the status of the lottery, they should use the command
+`buycraftlottocheck`.  This returns the information on the current pot.
+
+**Notice to Developers**
 
 When working on any non-trivial features, ones that could take more than one
 commit to add, create a new commit to work on it.  Name the branch following
@@ -14,7 +26,8 @@ to a feature after it is merged, just checkout the feature branch, edit the
 files as you need, checkout master, then make another merge.  The warning
 above still applies.
 
-#Indentation
+**Indentation**
+
 I (Treyzania) use the 1TBS indentation style in Java, so please do the same in
 this project such that everything matches.  Same goes for the line skipping
 format.
