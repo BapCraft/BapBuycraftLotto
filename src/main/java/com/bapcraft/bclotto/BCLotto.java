@@ -1,5 +1,7 @@
 package com.bapcraft.bclotto;
 
+import java.util.ArrayList;
+
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.bapcraft.bclotto.commands.CommandAddTicket;
@@ -13,6 +15,7 @@ public class BCLotto extends JavaPlugin {
 	public static BCLotto instance = null;
 	
 	public Drawing activeDrawing = null;
+	public ArrayList<Drawing> previousDrawings = new ArrayList<Drawing>();
 	
 	@Override
 	public void onEnable() {
