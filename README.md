@@ -4,8 +4,8 @@ This is a plugin made for the Bapcraft Minecraft server to manage the sever-
 side implementation of their Buycraft lottery.
 
 To add a player to the lottery, use the command `addbcticket <uuid>`, where
-the UUID is the player's account ID in the format `XXXXXXXX-XXXX-XXXX-XXXX-
-XXXXXXXXXXXX`, in the console.
+the UUID is the player's account ID in the format
+`XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX`, in the console.
 
 For players to check the status of the lottery, they should use the command
 `buycraftlottocheck`.  This returns the information on the current pot.
