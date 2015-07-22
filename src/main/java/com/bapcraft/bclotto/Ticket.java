@@ -15,6 +15,13 @@ public class Ticket {
 		
 	}
 	
+	/**
+	 * <summary>
+	 * Returns the price of tickets in USD.
+	 * </summary>
+	 * 
+	 * @return The price.
+	 */
 	public static final BigDecimal getTicketPrice() {
 		return TICKET_PRICE;
 	}
