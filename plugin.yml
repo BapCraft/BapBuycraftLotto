@@ -1,5 +1,5 @@
-name: SpigotBlankPlugin
-main: com.meeku.tutorialplugin.SpigotBlankPlugin
+name: bapBuycraftLotto
+main: com.bapcraft.bclotto.BCLotto
 version: 1.0
 commands:
     addbcticket:
