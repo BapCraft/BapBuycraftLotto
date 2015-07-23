@@ -31,6 +31,12 @@ public class CommandAddTicket implements CommandExecutor {
 			
 		} else {
 			
+			if (BCLotto.instance.activeDrawing.state != Drawing.DrawingState.READY) {
+				
+				BCLotto.instance.history.setupNewDrawing(); // TODO Error detection.
+				
+			}
+			
 			Ticket added = null;
 			
 			// Let's make sure that the UUID makes sense.
