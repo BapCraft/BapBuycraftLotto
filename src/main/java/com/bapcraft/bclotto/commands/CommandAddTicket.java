@@ -1,5 +1,6 @@
 package com.bapcraft.bclotto.commands;
 
+import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.command.Command;
@@ -10,6 +11,7 @@ import org.bukkit.entity.Player;
 import com.bapcraft.bclotto.BCLotto;
 import com.bapcraft.bclotto.Drawing;
 import com.bapcraft.bclotto.Ticket;
+import com.bapcraft.bclotto.prizes.Prize;
 
 public class CommandAddTicket implements CommandExecutor {
 
@@ -57,7 +59,26 @@ public class CommandAddTicket implements CommandExecutor {
 				
 				UUID winner = draw.getWinner();
 				
-				// TODO Weighted chance probability.
+				// Weighted random calculation. (From http://stackoverflow.com/questions/6737283)
+				int totalWeight = 0;
+				int prizeIndex = -1;
+				Prize[] prizes = (Prize[]) draw.prizes.keySet().toArray();
+				
+				for (Integer i : draw.prizes.values()) totalWeight += i;
+				
+				double random = Math.random() * totalWeight;
+				for (int i = 0; i < prizes.length; i++) {
+				    
+					random -= draw.prizes.get(prizes[i]);
+				    
+					if (random <= 0.0d) {
+				        prizeIndex = i;
+				        break;
+				    }
+				    
+				}
+				
+				prizes[prizeIndex].onWin(draw, winner); // Anticlimatic.
 				
 			}
 			

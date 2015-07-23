@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
+
 import com.bapcraft.bclotto.prizes.Prize;
+import com.bapcraft.bclotto.prizes.PrizeNotifyAdmin;
 
 public class Drawing { // Noun.
 
@@ -25,6 +28,8 @@ public class Drawing { // Noun.
 		
 		this.prizes = new HashMap<Prize, Integer>();
 		this.pot = new ArrayList<Ticket>();
+		
+		this.putPrize(new PrizeNotifyAdmin(), 100);
 		
 	}
 	
@@ -97,13 +102,30 @@ public class Drawing { // Noun.
 			SecureRandom sr = new SecureRandom();
 			this.winner = this.pot.get(sr.nextInt(this.pot.size())).player;
 			
-			// Now makes sure that 
+			this.announceWinner();
+			
+			// Now makes sure that it doesn't do multiple confliting draws.
 			over = true;
 			
 		}
 		
 		return this.winner;
 		
+	}
+	
+	/**
+	 * <summary>
+	 * Announces to the server if somebody has won.
+	 * </summary>
+	 */
+	public void announceWinner() {
+		Bukkit.broadcastMessage(
+			"Player "
+			+ Bukkit.getPlayer(this.winner).getDisplayName()
+			+ " has won the lottery with "
+			+ this.getNumbTicketsForPlayer(this.winner)
+			+ " tickets!"
+		);
 	}
 	
 	/**
