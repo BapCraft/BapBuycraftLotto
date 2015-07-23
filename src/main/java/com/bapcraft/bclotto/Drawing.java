@@ -19,7 +19,7 @@ public class Drawing { // Noun.
 	public HashMap<Prize, Integer> prizes;
 	public ArrayList<Ticket> pot;
 	
-	private volatile boolean over; // True if the thing is over.  Volatile because race condition is bad.
+	public volatile DrawingState state;
 	private UUID winner;
 	
 	public Drawing() {
@@ -30,6 +30,8 @@ public class Drawing { // Noun.
 		this.pot = new ArrayList<Ticket>();
 		
 		this.putPrize(new PrizeNotifyAdmin(), 100);
+		
+		this.state = DrawingState.READY;
 		
 	}
 	
@@ -92,7 +94,7 @@ public class Drawing { // Noun.
 	 */
 	public UUID getWinner() {
 		
-		if (!over) {
+		if (this.state == DrawingState.READY) {
 			
 			/*
 			 * Probaby not necessary to use SecureRandom, but it can give a little
@@ -105,7 +107,7 @@ public class Drawing { // Noun.
 			this.announceWinner();
 			
 			// Now makes sure that it doesn't do multiple confliting draws.
-			over = true;
+			this.state = DrawingState.COMPLETED;
 			
 		}
 		
@@ -138,7 +140,7 @@ public class Drawing { // Noun.
 	 * @return  
 	 */
 	public boolean isWinnerNormallyAvailable() {
-		return over || (this.pot.size() >= NEEDED_TICKETS);
+		return (this.state == DrawingState.COMPLETED) || (this.pot.size() >= NEEDED_TICKETS);
 	}
 	
 	/**
@@ -147,7 +149,10 @@ public class Drawing { // Noun.
 	 * </summary>
 	 */
 	private void checkOverAndAbort() {
-		if (over) throw new IllegalStateException("This lottery already occured!");
+		
+		if (this.state == DrawingState.COMPLETED) throw new IllegalStateException("This lottery already occured!");
+		if (this.state == DrawingState.CANCELLED) throw new IllegalStateException("This lottery has been cancelled!");
+		
 	}
 	
 	/**
@@ -159,6 +164,14 @@ public class Drawing { // Noun.
 	 */
 	public static final int getTicketsNeeded() {
 		return NEEDED_TICKETS;
+	}
+	
+	public static enum DrawingState {
+		
+		READY,
+		CANCELLED,
+		COMPLETED;
+		
 	}
 	
 }
