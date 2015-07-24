@@ -4,12 +4,18 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import nu.xom.Attribute;
+import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.Element;
+import nu.xom.Elements;
+import nu.xom.ParsingException;
 
 import org.bukkit.Bukkit;
+
+import com.sun.corba.se.spi.activation.Server;
 
 public class HistoryManager {
 
@@ -44,7 +50,60 @@ public class HistoryManager {
 	 * </summary>
 	 */
 	private void readFromFile() {
-		// TODO This logic.
+		
+		// Clear preset stuff...
+		this.drawHistory = new ArrayList<Drawing>();
+		
+		Builder b = new Builder();
+		Document xml = null;
+		
+		try {
+			xml = b.build(this.historyFile);
+		} catch (ParsingException pe) {
+			pe.printStackTrace();
+			Bukkit.getLogger().severe("Lottery History parsing failed.  Delete the file to fix.");
+			Bukkit.shutdown();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+			Bukkit.getLogger().severe("Something else happend that should not have when parsing the History.");
+			Bukkit.shutdown();
+		}
+		
+		// At this point the xml variable shouldn't be null.
+		Element root = xml.getRootElement();
+		Elements drawings = root.getChildElements("drawing");
+		
+		// Elements doesn't implement IIterator... ;_;
+		for (int i = 0; i < drawings.size(); i++) {
+			
+			Drawing theD = new Drawing();
+			Element curDraw = drawings.get(i);
+			Elements tickets = curDraw.getChildElements("ticket");
+			
+			theD.state = null;
+			theD.startTime = Long.parseLong(curDraw.getAttributeValue("start"));
+			theD.drawTime = Long.parseLong(curDraw.getAttributeValue("done"));
+			
+			// Figure out the state.  Not the most efficient, but it's pretty.
+			String stateName = curDraw.getAttributeValue("state");
+			for (Drawing.DrawingState test : Drawing.DrawingState.values()) if (test.name.equals(stateName)) theD.state = test; 
+			
+			for (int j = 0; j < tickets.size(); j++) {
+				
+				Element t = tickets.get(j);
+				UUID parsedUUID = UUID.fromString(t.getChild(0).getValue());
+				
+				theD.addTicket(new Ticket(parsedUUID)); // Add the ticket.
+				
+				String win = t.getAttributeValue("winner");
+				if ("true".equals(win)) { // Reversed because we aren't sure that `win` is not null.
+					theD.winner = parsedUUID; // Should be a text node.
+				}
+				
+			}
+			
+		}
+		
 	}
 	
 	/**
@@ -113,6 +172,8 @@ public class HistoryManager {
 		}
 		
 		fos = null;
+		
+		// TODO Something about which prize was recieved.
 		
 	}
 	

@@ -20,7 +20,7 @@ public class Drawing { // Noun.
 	public ArrayList<Ticket> pot;
 	
 	public volatile DrawingState state;
-	private UUID winner;
+	protected UUID winner;
 	
 	public Drawing() {
 		
