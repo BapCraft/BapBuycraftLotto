@@ -15,8 +15,6 @@ import nu.xom.ParsingException;
 
 import org.bukkit.Bukkit;
 
-import com.sun.corba.se.spi.activation.Server;
-
 public class HistoryManager {
 
 	public static final String HISTORY_FILE_NAME = "history.xml";
