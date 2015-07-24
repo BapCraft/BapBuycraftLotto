@@ -1,6 +1,5 @@
 package com.bapcraft.bclotto.commands;
 
-import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.command.Command;
