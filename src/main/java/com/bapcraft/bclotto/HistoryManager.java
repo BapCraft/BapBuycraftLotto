@@ -131,7 +131,7 @@ public class HistoryManager {
 			// This *does* make multiple identical element tags, but that's ok, I guess...
 			for (int j = 0; j < cur.pot.size(); j++) {
 				
-				Ticket t = cur.pot.get(i);
+				Ticket t = cur.pot.get(j);
 				Element ticketEle = new Element("ticket");
 				
 				ticketEle.appendChild(t.player.toString());
