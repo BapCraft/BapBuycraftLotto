@@ -14,8 +14,8 @@ public class Drawing { // Noun.
 
 	protected static int NEEDED_TICKETS = 10; // Changed in config. 
 	
-	protected long startTime; // Soon after the previous.
-	protected long drawTime;
+	protected long startTime = -1; // Soon after the previous.
+	protected long drawTime = -1;
 	public HashMap<Prize, Integer> prizes;
 	public ArrayList<Ticket> pot;
 	
@@ -117,6 +117,18 @@ public class Drawing { // Noun.
 	
 	/**
 	 * <summary>
+	 * Returns the UUID of the winner, if there is one.
+	 * Returns <code>null</code> otherwise.
+	 * </summary>
+	 * 
+	 * @return Possibly, the UUID of the winner.
+	 */
+	public UUID getWinner_PASSIVE() {
+		return this.winner;
+	}
+	
+	/**
+	 * <summary>
 	 * Announces to the server if somebody has won.
 	 * </summary>
 	 */
@@ -168,9 +180,15 @@ public class Drawing { // Noun.
 	
 	public static enum DrawingState {
 		
-		READY,
-		CANCELLED,
-		COMPLETED;
+		READY("ready"),
+		CANCELLED("cancelled"),
+		COMPLETED("completed");
+		
+		public final String name;
+		
+		DrawingState(String name) {
+			this.name = name;
+		}
 		
 	}
 	
