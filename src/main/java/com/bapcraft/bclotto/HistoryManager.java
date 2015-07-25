@@ -145,7 +145,7 @@ public class HistoryManager {
 				Ticket t = cur.pot.get(j);
 				Element ticketEle = new Element("ticket");
 				
-				ticketEle.appendChild(t.player.toString());
+				if (t.player != null) ticketEle.appendChild(t.player.toString()); else continue;
 				if (t.player == cur.getWinner_PASSIVE()) ticketEle.addAttribute(new Attribute("winner", "true"));
 				
 				drawEle.appendChild(ticketEle);
