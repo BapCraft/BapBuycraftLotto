@@ -114,6 +114,11 @@ public class HistoryManager {
 		Element root = new Element("lottery");
 		Document xml = new Document(root);
 		
+		// Makes it have the current drawing as well.
+		@SuppressWarnings("unchecked")
+		ArrayList<Drawing> sigmaDraw = (ArrayList<Drawing>) this.drawHistory.clone();
+		sigmaDraw.add(BCLotto.instance.activeDrawing);
+		
 		// Make all the history of drawings.
 		for (int i = 0; i < this.drawHistory.size(); i++) {
 			
