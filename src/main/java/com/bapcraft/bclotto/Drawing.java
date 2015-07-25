@@ -124,9 +124,12 @@ public class Drawing { // Noun.
 	 */
 	public void finishDrawing() {
 		
+		this.checkOverAndAbort();
+		
 		Drawing draw = BCLotto.instance.activeDrawing;
 		
 		UUID winner = draw.getWinner();
+		this.drawTime = System.currentTimeMillis();
 		
 		// Weighted random calculation. (From http://stackoverflow.com/questions/6737283)
 		int totalWeight = 0;
