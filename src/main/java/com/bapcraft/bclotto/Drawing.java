@@ -3,6 +3,7 @@ package com.bapcraft.bclotto;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -112,6 +113,41 @@ public class Drawing { // Noun.
 		}
 		
 		return this.winner;
+		
+	}
+	
+	/**
+	 * <summary>
+	 * Finishes the drawing and does some cleanup.
+	 * Does not setup the next one.
+	 * </summary>
+	 */
+	public void finishDrawing() {
+		
+		Drawing draw = BCLotto.instance.activeDrawing;
+		
+		UUID winner = draw.getWinner();
+		
+		// Weighted random calculation. (From http://stackoverflow.com/questions/6737283)
+		int totalWeight = 0;
+		int prizeIndex = -1;
+		Set<Prize> prizes = draw.prizes.keySet();
+		
+		for (Integer i : draw.prizes.values()) totalWeight += i;
+		
+		double random = Math.random() * totalWeight;
+		for (int i = 0; i < prizes.size(); i++) {
+		    
+			random -= draw.prizes.get((Prize) prizes.toArray()[i]);
+		    
+			if (random <= 0.0d) {
+		        prizeIndex = i;
+		        break;
+		    }
+		    
+		}
+		
+		((Prize) prizes.toArray()[prizeIndex]).onWin(draw, winner); // Anti-climatic.
 		
 	}
 	

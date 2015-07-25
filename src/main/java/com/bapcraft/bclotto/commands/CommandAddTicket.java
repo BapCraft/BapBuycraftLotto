@@ -1,6 +1,5 @@
 package com.bapcraft.bclotto.commands;
 
-import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -12,7 +11,6 @@ import org.bukkit.entity.Player;
 import com.bapcraft.bclotto.BCLotto;
 import com.bapcraft.bclotto.Drawing;
 import com.bapcraft.bclotto.Ticket;
-import com.bapcraft.bclotto.prizes.Prize;
 
 public class CommandAddTicket implements CommandExecutor {
 
@@ -61,28 +59,7 @@ public class CommandAddTicket implements CommandExecutor {
 			
 			if (draw.isWinnerNormallyAvailable()) {
 				
-				UUID winner = draw.getWinner();
-				
-				// Weighted random calculation. (From http://stackoverflow.com/questions/6737283)
-				int totalWeight = 0;
-				int prizeIndex = -1;
-				Set<Prize> prizes = draw.prizes.keySet();
-				
-				for (Integer i : draw.prizes.values()) totalWeight += i;
-				
-				double random = Math.random() * totalWeight;
-				for (int i = 0; i < prizes.size(); i++) {
-				    
-					random -= draw.prizes.get((Prize) prizes.toArray()[i]);
-				    
-					if (random <= 0.0d) {
-				        prizeIndex = i;
-				        break;
-				    }
-				    
-				}
-				
-				((Prize) prizes.toArray()[prizeIndex]).onWin(draw, winner); // Anti-climatic.
+				draw.finishDrawing();
 				BCLotto.instance.history.setupNewDrawing(); // Make sure it won't stay at 100%.
 				
 			}
