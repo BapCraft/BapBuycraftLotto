@@ -2,6 +2,7 @@ package com.bapcraft.bclotto.commands;
 
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -42,12 +43,7 @@ public class CommandAddTicket implements CommandExecutor {
 			try {
 				added = new Ticket(UUID.fromString(args[0]));
 			} catch (IllegalArgumentException iae) {
-				
-				// The decoding probably failed.  Notify the user.
-				sender.sendMessage("UUID decoding failed!  Probaby wrong format!");
-				sender.sendMessage("UUID needs to be in format `XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX`."); // Could I use a \n for this line?
-				return false;
-				
+				added = new Ticket(Bukkit.getPlayer(args[0]).getUniqueId());
 			}
 			
 			// Now that we have the UUID in a format we can work with, we can move on...
