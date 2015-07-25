@@ -86,8 +86,6 @@ public class HistoryManager {
 			String stateName = curDraw.getAttributeValue("state");
 			for (Drawing.DrawingState test : Drawing.DrawingState.values()) if (test.name.equals(stateName)) theD.state = test; 
 			
-			if (theD.state == Drawing.DrawingState.READY) BCLotto.instance.activeDrawing = theD;
-			
 			for (int j = 0; j < tickets.size(); j++) {
 				
 				Element t = tickets.get(j);
@@ -100,6 +98,12 @@ public class HistoryManager {
 					theD.winner = parsedUUID; // Should be a text node.
 				}
 				
+			}
+			
+			if (theD.state == Drawing.DrawingState.READY) {
+				
+			} else {
+				this.drawHistory.add(theD);
 			}
 			
 		}
@@ -122,9 +126,9 @@ public class HistoryManager {
 		sigmaDraw.add(BCLotto.instance.activeDrawing);
 		
 		// Make all the history of drawings.
-		for (int i = 0; i < this.drawHistory.size(); i++) {
+		for (int i = 0; i < sigmaDraw.size(); i++) {
 			
-			Drawing cur = this.drawHistory.get(i);
+			Drawing cur = sigmaDraw.get(i);
 			Element drawEle = new Element("drawing");
 			
 			if (cur == null) continue;
