@@ -56,26 +56,24 @@ public class UsernameFetcher {
 		 * 
 		 */
 		
-		String re1=".*?";	// Non-greedy match on filler
-	    String re2="(?:[a-z][a-z]+)";	// Uninteresting: word
-	    String re3=".*?";	// Non-greedy match on filler
-	    String re4="(?:[a-z][a-z]+)";	// Uninteresting: word
-	    String re5=".*?";	// Non-greedy match on filler
-	    String re6="(?:[a-z][a-z]+)";	// Uninteresting: word
-	    String re7=".*?";	// Non-greedy match on filler
-	    String re8="(?:[a-z][a-z]+)";	// Uninteresting: word
-	    String re9=".*?";	// Non-greedy match on filler
-	    String re10="((?:[a-z][a-z]+))";	// Word 1
+		String re1=".*?";					// Non-greedy match on filler
+	    String re2="(?:[a-z][a-z0-9_]*)";	// Uninteresting: var
+	    String re3=".*?";					// Non-greedy match on filler
+	    String re4="(?:[a-z][a-z0-9_]*)";	// Uninteresting: var
+	    String re5=".*?";					// Non-greedy match on filler
+	    String re6="(?:[a-z][a-z0-9_]*)";	// Uninteresting: var
+	    String re7=".*?";					// Non-greedy match on filler
+	    String re8="((?:[a-z][a-z0-9_]*))";	// Variable Name 1
 
-	    Pattern p = Pattern.compile(re1+re2+re3+re4+re5+re6+re7+re8+re9+re10,Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+	    Pattern p = Pattern.compile(re1+re2+re3+re4+re5+re6+re7+re8, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 	    Matcher m = p.matcher(response);
 	    if (m.find()) {
-	        String word1=m.group(1);
-	        return word1;
+	        return m.group(1);
+	    } else {
+	    	System.out.println("Something happened.  It doesn't matter at this point.");
+	    	return "8====D";
 	    }
 	    
-		return "";
-		
 	}
 	
 }
