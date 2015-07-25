@@ -25,8 +25,8 @@ public class BCLotto extends JavaPlugin {
 	public void onEnable() {
 		
 		// Inits
-		instance = this;
 		config = this.getConfig();
+		instance = this;
 		history = new HistoryManager();
 		history.init();
 		
@@ -42,10 +42,10 @@ public class BCLotto extends JavaPlugin {
 	public void onDisable() {
 		
 		// De-inits
-		instance = null;
-		config = null;
 		history.deinit();
 		history = null;
+		instance = null;
+		config = null;
 		
 		this.getCommand(NAME_ADD_TICKET_COMMAND).setExecutor(null);
 		this.getCommand(NAME_CHECK_POT_COMMAND).setExecutor(null);
