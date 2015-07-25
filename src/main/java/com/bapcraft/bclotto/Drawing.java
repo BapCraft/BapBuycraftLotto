@@ -79,7 +79,23 @@ public class Drawing { // Noun.
 	public int getNumbTicketsForPlayer(UUID uuid) {
 		
 		int cnt = 0;
-		for (Ticket t : this.pot) if (t.player.equals(uuid)) cnt++; // <-- That's so beautiful.
+		
+		try {
+			
+			for (Ticket t : this.pot) {
+				
+				if (t.player.equals(uuid)) {
+					
+					cnt++;
+					
+				}
+				
+			}
+			
+		} catch (NullPointerException npe) { // This happened once.
+			cnt = -1;
+		}
+		
 		return cnt;
 		
 	}
@@ -181,10 +197,12 @@ public class Drawing { // Noun.
 			winnerName = "UUID:" + this.winner.toString();
 		}
 		
+		int tickets = this.getNumbTicketsForPlayer(this.winner);
+		
 		sb.append("Player ");
 		sb.append(winnerName);
 		sb.append(" has won the lottery with ");
-		sb.append(this.getNumbTicketsForPlayer(this.winner));
+		sb.append(tickets != -1 ? tickets : "?ERROR?");
 		sb.append(" tickets!");
 		
 		Bukkit.broadcastMessage(sb.toString());
