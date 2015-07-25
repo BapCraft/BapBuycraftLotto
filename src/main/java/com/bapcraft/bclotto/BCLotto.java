@@ -19,12 +19,16 @@ public class BCLotto extends JavaPlugin {
 	public Drawing activeDrawing = null;
 	public ArrayList<Drawing> previousDrawings = new ArrayList<Drawing>();
 	public FileConfiguration config = null;
+	public HistoryManager history;
 	
 	@Override
 	public void onEnable() {
 		
+		// Inits
 		instance = this;
 		config = this.getConfig();
+		history = new HistoryManager();
+		history.init();
 		
 		this.getCommand(NAME_ADD_TICKET_COMMAND).setExecutor(new CommandAddTicket());
 		this.getCommand(NAME_CHECK_POT_COMMAND).setExecutor(new CommandCheckPot());
@@ -37,8 +41,11 @@ public class BCLotto extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		
+		// De inits.
 		instance = null;
 		config = null;
+		history.deinit();
+		history = null;
 		
 		this.getCommand(NAME_ADD_TICKET_COMMAND).setExecutor(null);
 		this.getCommand(NAME_CHECK_POT_COMMAND).setExecutor(null);

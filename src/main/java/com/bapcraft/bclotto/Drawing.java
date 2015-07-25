@@ -14,13 +14,13 @@ public class Drawing { // Noun.
 
 	protected static int NEEDED_TICKETS = 10; // Changed in config. 
 	
-	protected long startTime; // Soon after the previous.
-	protected long drawTime;
+	protected long startTime = -1; // Soon after the previous.
+	protected long drawTime = -1;
 	public HashMap<Prize, Integer> prizes;
 	public ArrayList<Ticket> pot;
 	
-	private volatile boolean over; // True if the thing is over.  Volatile because race condition is bad.
-	private UUID winner;
+	public volatile DrawingState state;
+	protected UUID winner;
 	
 	public Drawing() {
 		
@@ -30,6 +30,8 @@ public class Drawing { // Noun.
 		this.pot = new ArrayList<Ticket>();
 		
 		this.putPrize(new PrizeNotifyAdmin(), 100);
+		
+		this.state = DrawingState.READY;
 		
 	}
 	
@@ -92,7 +94,7 @@ public class Drawing { // Noun.
 	 */
 	public UUID getWinner() {
 		
-		if (!over) {
+		if (this.state == DrawingState.READY) {
 			
 			/*
 			 * Probaby not necessary to use SecureRandom, but it can give a little
@@ -105,12 +107,24 @@ public class Drawing { // Noun.
 			this.announceWinner();
 			
 			// Now makes sure that it doesn't do multiple confliting draws.
-			over = true;
+			this.state = DrawingState.COMPLETED;
 			
 		}
 		
 		return this.winner;
 		
+	}
+	
+	/**
+	 * <summary>
+	 * Returns the UUID of the winner, if there is one.
+	 * Returns <code>null</code> otherwise.
+	 * </summary>
+	 * 
+	 * @return Possibly, the UUID of the winner.
+	 */
+	public UUID getWinner_PASSIVE() {
+		return this.winner;
 	}
 	
 	/**
@@ -138,7 +152,7 @@ public class Drawing { // Noun.
 	 * @return  
 	 */
 	public boolean isWinnerNormallyAvailable() {
-		return over || (this.pot.size() >= NEEDED_TICKETS);
+		return (this.state == DrawingState.COMPLETED) || (this.pot.size() >= NEEDED_TICKETS);
 	}
 	
 	/**
@@ -147,7 +161,10 @@ public class Drawing { // Noun.
 	 * </summary>
 	 */
 	private void checkOverAndAbort() {
-		if (over) throw new IllegalStateException("This lottery already occured!");
+		
+		if (this.state == DrawingState.COMPLETED) throw new IllegalStateException("This lottery already occured!");
+		if (this.state == DrawingState.CANCELLED) throw new IllegalStateException("This lottery has been cancelled!");
+		
 	}
 	
 	/**
@@ -159,6 +176,20 @@ public class Drawing { // Noun.
 	 */
 	public static final int getTicketsNeeded() {
 		return NEEDED_TICKETS;
+	}
+	
+	public static enum DrawingState {
+		
+		READY("ready"),
+		CANCELLED("cancelled"),
+		COMPLETED("completed");
+		
+		public final String name;
+		
+		DrawingState(String name) {
+			this.name = name;
+		}
+		
 	}
 	
 }

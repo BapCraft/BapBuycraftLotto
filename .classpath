@@ -3,5 +3,6 @@
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/spigot-api-1.7.10-R0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/xom-1.2.10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
