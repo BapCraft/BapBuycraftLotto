@@ -1,8 +1,8 @@
 package com.bapcraft.bclotto.commands;
 
+import java.util.Arrays;
 import java.util.UUID;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import com.bapcraft.bclotto.BCLotto;
 import com.bapcraft.bclotto.Drawing;
 import com.bapcraft.bclotto.Ticket;
+import com.evilmidget38.UUIDFetcher;
 
 public class CommandAddTicket implements CommandExecutor {
 
@@ -38,11 +39,30 @@ public class CommandAddTicket implements CommandExecutor {
 			
 			Ticket added = null;
 			
+			if (args.length != 1) {
+				return false;
+			}
+			
 			// Let's make sure that the UUID makes sense.
 			try {
 				added = new Ticket(UUID.fromString(args[0]));
 			} catch (IllegalArgumentException iae) {
-				added = new Ticket(Bukkit.getPlayer(args[0]).getUniqueId());
+				
+				// It's probably a username.
+				String username = args[0];
+				
+				UUIDFetcher fetch = new UUIDFetcher(Arrays.asList(new String[] {username}));
+				UUID uuid = null;
+				
+				try {
+					uuid = fetch.call().get(username);
+				} catch (Exception e) {
+					e.printStackTrace();
+					sender.sendMessage("Something went wrong when looking up the username!  Try again.");
+				}
+				
+				added = new Ticket(uuid); // Wow.
+				
 			} catch (Exception e) {
 				sender.sendMessage("You did something wrong here, methinks.");
 			}
@@ -52,7 +72,10 @@ public class CommandAddTicket implements CommandExecutor {
 			Drawing draw = BCLotto.instance.activeDrawing;
 			
 			try {
+				
 				draw.addTicket(added);
+				sender.sendMessage("Ticket added successfully!");
+				
 			} catch (IllegalStateException ise) {
 				sender.sendMessage("New lottery hasn't started yet, please wait a second...");
 			}
