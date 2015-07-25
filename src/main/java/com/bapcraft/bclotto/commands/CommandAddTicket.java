@@ -1,5 +1,6 @@
 package com.bapcraft.bclotto.commands;
 
+import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -31,7 +32,7 @@ public class CommandAddTicket implements CommandExecutor {
 			
 		} else {
 			
-			if (BCLotto.instance.activeDrawing.state != Drawing.DrawingState.READY) {
+			if (BCLotto.instance.activeDrawing == null || BCLotto.instance.activeDrawing.state != Drawing.DrawingState.READY) {
 				
 				BCLotto.instance.history.setupNewDrawing(); // TODO Error detection.
 				
@@ -44,6 +45,8 @@ public class CommandAddTicket implements CommandExecutor {
 				added = new Ticket(UUID.fromString(args[0]));
 			} catch (IllegalArgumentException iae) {
 				added = new Ticket(Bukkit.getPlayer(args[0]).getUniqueId());
+			} catch (Exception e) {
+				sender.sendMessage("You did something wrong here, methinks.");
 			}
 			
 			// Now that we have the UUID in a format we can work with, we can move on...
@@ -80,6 +83,7 @@ public class CommandAddTicket implements CommandExecutor {
 				}
 				
 				((Prize) prizes.toArray()[prizeIndex]).onWin(draw, winner); // Anti-climatic.
+				BCLotto.instance.history.setupNewDrawing(); // Make sure it won't stay at 100%.
 				
 			}
 			
