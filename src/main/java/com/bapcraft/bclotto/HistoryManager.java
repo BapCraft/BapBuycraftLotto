@@ -91,7 +91,7 @@ public class HistoryManager {
 				Element t = tickets.get(j);
 				UUID parsedUUID = UUID.fromString(t.getChild(0).getValue());
 				
-				theD.addTicket(new Ticket(parsedUUID)); // Add the ticket.
+				theD.pot.add(new Ticket(parsedUUID)); // Add the ticket.
 				
 				String win = t.getAttributeValue("winner");
 				if ("true".equals(win)) { // Reversed because we aren't sure that `win` is not null.
@@ -126,7 +126,7 @@ public class HistoryManager {
 			drawEle.addAttribute(new Attribute("start", Long.toString(cur.startTime)));
 			drawEle.addAttribute(new Attribute("done", Long.toString(cur.drawTime)));
 			
-			xml.appendChild(drawEle);
+			root.appendChild(drawEle);
 			
 			// This *does* make multiple identical element tags, but that's ok, I guess...
 			for (int j = 0; j < cur.pot.size(); j++) {
