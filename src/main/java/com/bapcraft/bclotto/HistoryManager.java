@@ -181,6 +181,7 @@ public class HistoryManager {
 	public void init() {
 		
 		this.historyFile = new File(BCLotto.instance.getDataFolder(), HISTORY_FILE_NAME);
+		this.drawHistory = new ArrayList<Drawing>();
 		
 		if (this.historyFile.exists()) {
 			
