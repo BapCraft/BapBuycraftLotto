@@ -93,7 +93,7 @@ public class Drawing { // Noun.
 	 * 
 	 * @return The winner.
 	 */
-	public UUID getWinner() {
+	private UUID getWinner() {
 		
 		if (this.state == DrawingState.READY) {
 			
@@ -123,8 +123,6 @@ public class Drawing { // Noun.
 	 * </summary>
 	 */
 	public void finishDrawing() {
-		
-		this.checkOverAndAbort();
 		
 		Drawing draw = BCLotto.instance.activeDrawing;
 		
@@ -172,13 +170,25 @@ public class Drawing { // Noun.
 	 * </summary>
 	 */
 	public void announceWinner() {
-		Bukkit.broadcastMessage(
-			"Player "
-			+ Bukkit.getPlayer(this.winner).getDisplayName()
-			+ " has won the lottery with "
-			+ this.getNumbTicketsForPlayer(this.winner)
-			+ " tickets!"
-		);
+		
+		StringBuilder sb = new StringBuilder();
+		
+		String winnerName = "?";
+		
+		try {
+			winnerName = UsernameFetcher.getUsername(this.winner);
+		} catch (Exception e) {
+			winnerName = "UUID:" + this.winner.toString();
+		}
+		
+		sb.append("Player ");
+		sb.append(winnerName);
+		sb.append(" has won the lottery with ");
+		sb.append(this.getNumbTicketsForPlayer(this.winner));
+		sb.append(" tickets!");
+		
+		Bukkit.broadcastMessage(sb.toString());
+		
 	}
 	
 	/**
