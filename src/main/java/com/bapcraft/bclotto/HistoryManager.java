@@ -171,7 +171,7 @@ public class HistoryManager {
 		
 		fos = null;
 		
-		// TODO Something about which prize was recieved.
+		// TODO Something about which prize was received.
 		
 	}
 	
@@ -184,7 +184,7 @@ public class HistoryManager {
 		
 		if (this.historyFile.exists()) {
 			
-			// Loads the file, because it exists.
+			// Loads the file, because it clearly exists.
 			this.readFromFile();
 			
 		} else {
@@ -215,6 +215,9 @@ public class HistoryManager {
 	public void deinit() {
 		
 		this.flushHistoryToFile();
+		
+		this.historyFile = null;
+		this.drawHistory = null;
 		
 	}
 	

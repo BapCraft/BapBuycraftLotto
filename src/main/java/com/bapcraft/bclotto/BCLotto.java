@@ -41,7 +41,7 @@ public class BCLotto extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		
-		// De inits.
+		// De-inits
 		instance = null;
 		config = null;
 		history.deinit();

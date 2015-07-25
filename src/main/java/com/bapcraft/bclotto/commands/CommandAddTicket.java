@@ -83,7 +83,7 @@ public class CommandAddTicket implements CommandExecutor {
 				    
 				}
 				
-				prizes[prizeIndex].onWin(draw, winner); // Anticlimatic.
+				prizes[prizeIndex].onWin(draw, winner); // Anti-climatic.
 				
 			}
 			

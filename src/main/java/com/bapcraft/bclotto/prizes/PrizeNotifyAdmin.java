@@ -8,7 +8,12 @@ public class PrizeNotifyAdmin extends Prize {
 
 	@Override
 	public void onWin(Drawing pot, UUID winner) {
-		// TODO Notify a user.
+		/*
+		 * TODO Make it notify an admin.
+		 * (This doesn't exactly matter, because everyone finds out.
+		 * It was only really for making *sure* an admin/mod finds out.
+		 * 
+		 */
 	}
 
 }
