@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+class-path: ./xom-1.2.10.jar
+
