@@ -37,11 +37,13 @@ public class CommandCheckPot implements CommandExecutor {
 			sb.append(", for a total of ");
 			sb.append( pricePerTicket.multiply(new BigDecimal(numHas)) ); // Eww.
 			sb.append(" USD. ( ");
-			sb.append((int) ratio * 100F);
+			sb.append((int) (ratio * 100F));
 			sb.append("% )");
 			
 			// Send it.
 			sender.sendMessage(sb.toString());
+			
+			return true;
 			
 		} else {
 			sender.sendMessage("You're not a player!");
