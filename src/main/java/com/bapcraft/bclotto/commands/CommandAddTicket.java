@@ -63,14 +63,14 @@ public class CommandAddTicket implements CommandExecutor {
 				// Weighted random calculation. (From http://stackoverflow.com/questions/6737283)
 				int totalWeight = 0;
 				int prizeIndex = -1;
-				Prize[] prizes = (Prize[]) draw.prizes.keySet().toArray();
+				Set<Prize> prizes = draw.prizes.keySet();
 				
 				for (Integer i : draw.prizes.values()) totalWeight += i;
 				
 				double random = Math.random() * totalWeight;
-				for (int i = 0; i < prizes.length; i++) {
+				for (int i = 0; i < prizes.size(); i++) {
 				    
-					random -= draw.prizes.get(prizes[i]);
+					random -= draw.prizes.get((Prize) prizes.toArray()[i]);
 				    
 					if (random <= 0.0d) {
 				        prizeIndex = i;
@@ -79,7 +79,7 @@ public class CommandAddTicket implements CommandExecutor {
 				    
 				}
 				
-				prizes[prizeIndex].onWin(draw, winner); // Anti-climatic.
+				((Prize) prizes.toArray()[prizeIndex]).onWin(draw, winner); // Anti-climatic.
 				
 			}
 			
