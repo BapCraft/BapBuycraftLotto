@@ -1,4 +1,4 @@
-name: bapBuycraftLotto
+name: BapBuycraftLotto
 main: com.bapcraft.bclotto.BCLotto
 version: 1.0
 commands:

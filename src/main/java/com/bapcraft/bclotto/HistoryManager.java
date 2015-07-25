@@ -33,7 +33,7 @@ public class HistoryManager {
 		
 		Drawing oldDraw = BCLotto.instance.activeDrawing;
 		
-		if (oldDraw.state == Drawing.DrawingState.READY) oldDraw.state = Drawing.DrawingState.CANCELLED;
+		if (oldDraw != null && oldDraw.state == Drawing.DrawingState.READY) oldDraw.state = Drawing.DrawingState.CANCELLED;
 		
 		drawHistory.add(oldDraw);
 		BCLotto.instance.activeDrawing = new Drawing();
@@ -120,6 +120,8 @@ public class HistoryManager {
 			Drawing cur = this.drawHistory.get(i);
 			Element drawEle = new Element("drawing");
 			
+			if (cur == null) continue;
+			
 			drawEle.addAttribute(new Attribute("state", cur.state.name));
 			drawEle.addAttribute(new Attribute("start", Long.toString(cur.startTime)));
 			drawEle.addAttribute(new Attribute("done", Long.toString(cur.drawTime)));
@@ -194,6 +196,7 @@ public class HistoryManager {
 			
 			try {
 				
+				this.historyFile.getParentFile().mkdirs(); // Make sure the file tree exists.
 				this.historyFile.createNewFile();
 				this.setupNewDrawing();
 				
