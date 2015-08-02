@@ -3,6 +3,7 @@ package com.bapcraft.bclotto.commands;
 import java.util.Arrays;
 import java.util.UUID;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -24,9 +25,9 @@ public class CommandAddTicket implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		
-		if (sender instanceof Player) {
+		if (sender.isOp() == false) {
 			
-			sender.sendMessage("This can only be run on the console!");
+			sender.sendMessage(ChatColor.RED + "You must be OP or Console to run this command!");
 			return false;
 			
 		} else {
